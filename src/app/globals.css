@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream text-wood-dark font-body antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  @apply font-display;
+}
+
+/*
+  As classes abaixo ficam na camada "components" (em vez de soltas no arquivo)
+  para que classes utilitárias do Tailwind (ex: "bg-wheat" em cima de "btn-primary")
+  sempre tenham prioridade e consigam sobrescrevê-las quando combinadas na mesma
+  tag — caso contrário, por estarem depois de "@tailwind utilities" no arquivo,
+  elas venceriam o empate de especificidade e a sobrescrita não funcionaria.
+*/
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .section-padding {
+    @apply py-16 sm:py-24;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-wood px-6 py-3 text-sm font-semibold text-cream shadow-sm transition hover:bg-wood-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-wheat focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border-2 border-wood px-6 py-3 text-sm font-semibold text-wood transition hover:bg-wood hover:text-cream focus:outline-none focus-visible:ring-2 focus-visible:ring-wheat focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
+  }
+
+  .eyebrow {
+    @apply text-sm font-semibold uppercase tracking-[0.2em] text-forest;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-wood/20 bg-white px-3.5 py-2.5 text-[0.95rem] text-wood-dark placeholder:text-wood-dark/40 focus:border-wood focus:outline-none focus:ring-2 focus:ring-wheat/50;
+  }
+}
