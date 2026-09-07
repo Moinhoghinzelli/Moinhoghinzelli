@@ -100,6 +100,32 @@ export const ATRACOES = [
   },
 ] as const;
 
+export const GOOGLE_AVALIACOES = {
+  nota: 5.0,
+  total: 48,
+} as const;
+
+export const DEPOIMENTOS = [
+  {
+    nome: "Leandro Landmeier",
+    creditos: "Guia Local no Google · 71 avaliações",
+    texto:
+      "Voltamos no tempo: moinho centenário todo restaurado, os anfitriões são pessoas maravilhosas. No local tem cascata e bodega com alimentação, tour guiado pelo moinho. Fácil de chegar, pelo GPS bem tranquilo.",
+  },
+  {
+    nome: "Cassia Taube",
+    creditos: "Guia Local no Google · 1.041 avaliações",
+    texto:
+      "O moinho é uma imersão histórica, movido a água — ainda faz farinha na hora para demonstrar aos turistas. O passeio é guiado pelo João, neto do moinho, que conta a história do lugar com uma paixão indescritível: a primeira vez que ouvi, chorei com ele. Vale muito a pena, inclusive as crianças vão gostar.",
+  },
+  {
+    nome: "Fernanda Duarte",
+    creditos: "Guia Local no Google · veio de Recife/PE",
+    texto:
+      "Vim de Recife até Antônio Prado e posso dizer sem exagero: é simplesmente magnífico! Cada cantinho desse lugar transborda história, cultura e acolhimento. Fui muito bem recebida por João e pela família dele. Me senti em casa o tempo todo — um lugar especial para viver, sentir e se encantar.",
+  },
+] as const;
+
 export const HISTORIA_TEXTO = [
   "Em 1894, na comunidade de São Roque, interior de Antônio Prado, o imigrante italiano Cesare Ghinzelli construiu um moinho movido pela força da água. A ideia era simples e essencial: transformar em farinha o alimento cultivado na própria terra, para sustento da família e de toda a comunidade ao redor.",
   "O moinho nasceu do trabalho, da necessidade e da criatividade de quem ajudou a construir a vida na região. Ao lado dele, a família preservou também a casa e os espaços do cotidiano da época, formando um conjunto que resiste até hoje como um retrato fiel de outros tempos. Com o passar dos anos, Cesare deixou o moinho como legado ao filho, Estevão Ghinzelli, que deu continuidade à atividade e manteve viva a tradição por muitos anos.",

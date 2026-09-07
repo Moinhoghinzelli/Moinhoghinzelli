@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ATRACOES, PARK } from "@/lib/constants";
+import { ATRACOES, DEPOIMENTOS, GOOGLE_AVALIACOES, PARK } from "@/lib/constants";
 import SectionHeading from "@/components/SectionHeading";
 import WhatsappButton from "@/components/WhatsappButton";
 import MapEmbed from "@/components/MapEmbed";
@@ -115,6 +115,43 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* DEPOIMENTOS */}
+      <section className="section-padding bg-wheat-light/30">
+        <div className="container-page">
+          <SectionHeading
+            eyebrow="Quem visitou conta"
+            title="Avaliações de quem já esteve aqui"
+            description={`${GOOGLE_AVALIACOES.nota.toFixed(1).replace(".", ",")} de 5 em ${GOOGLE_AVALIACOES.total} avaliações no Google.`}
+            align="center"
+          />
+          <div className="mt-12 grid gap-6 sm:grid-cols-3">
+            {DEPOIMENTOS.map((depoimento) => (
+              <div
+                key={depoimento.nome}
+                className="flex flex-col rounded-2xl border border-wood/10 bg-cream p-6 shadow-sm"
+              >
+                <Stars />
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-wood-dark/80">
+                  “{depoimento.texto}”
+                </p>
+                <p className="mt-4 text-sm font-semibold text-wood-dark">{depoimento.nome}</p>
+                <p className="text-xs text-wood-dark/60">{depoimento.creditos}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <a
+              href={PARK.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-semibold text-forest hover:text-forest-dark"
+            >
+              Ver todas as avaliações no Google →
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* INGRESSOS TEASER */}
       <section className="section-padding">
         <div className="container-page grid items-center gap-10 rounded-3xl bg-wood px-8 py-12 text-cream sm:px-14 lg:grid-cols-2">
@@ -158,6 +195,18 @@ export default function HomePage() {
         </div>
       </section>
     </>
+  );
+}
+
+function Stars() {
+  return (
+    <div className="flex gap-0.5 text-wheat-dark" aria-label="5 de 5 estrelas">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2.5l2.9 6.3 6.9.7-5.2 4.7 1.5 6.8L12 17.8 5.9 21l1.5-6.8-5.2-4.7 6.9-.7L12 2.5Z" />
+        </svg>
+      ))}
+    </div>
   );
 }
 
