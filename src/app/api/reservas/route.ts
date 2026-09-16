@@ -6,6 +6,14 @@ function isValidDateString(value: unknown): value is string {
   return typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
 }
 
+// A reserva pelo site é só para visitas durante a semana — aos sábados e
+// domingos o parque recebe visitantes sem reserva prévia.
+function isFimDeSemana(dataISO: string): boolean {
+  const [ano, mes, dia] = dataISO.split("-").map(Number);
+  const diaDaSemana = new Date(Date.UTC(ano, mes - 1, dia)).getUTCDay();
+  return diaDaSemana === 0 || diaDaSemana === 6;
+}
+
 function asNonNegativeInt(value: unknown, fallback = 0): number {
   const n = Number(value);
   if (!Number.isFinite(n) || n < 0) return fallback;
@@ -30,7 +38,8 @@ export async function POST(request: Request) {
   const telefone = (body.telefone ?? "").toString().trim();
   const email = body.email ? body.email.toString().trim() : undefined;
   const dataVisita = body.dataVisita;
-  const tipoVisita = body.tipoVisita;
+  // A reserva pelo site é sempre entrada + visita guiada, durante a semana.
+  const tipoVisita = "guiada" as const;
   const observacoes = body.observacoes ? body.observacoes.toString().trim() : undefined;
 
   if (!nome || nome.length < 2) {
@@ -42,8 +51,14 @@ export async function POST(request: Request) {
   if (!isValidDateString(dataVisita)) {
     return NextResponse.json({ error: "Informe uma data de visita válida." }, { status: 400 });
   }
-  if (tipoVisita !== "parque" && tipoVisita !== "guiada") {
-    return NextResponse.json({ error: "Tipo de visita inválido." }, { status: 400 });
+  if (isFimDeSemana(dataVisita)) {
+    return NextResponse.json(
+      {
+        error:
+          "Aos sábados e domingos não é necessário reservar — é só chegar. Escolha um dia de semana para reservar.",
+      },
+      { status: 400 }
+    );
   }
 
   const adultos = asNonNegativeInt(body.adultos, 1);

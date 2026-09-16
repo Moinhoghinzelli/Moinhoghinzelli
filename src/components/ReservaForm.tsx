@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import type { ReservaInput, TipoVisita } from "@/types/reserva";
+import type { ReservaInput } from "@/types/reserva";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -18,6 +18,15 @@ const initialState: ReservaInput = {
   empresa: "",
 };
 
+// A reserva pelo site é só para visitas durante a semana — aos sábados e
+// domingos o parque recebe visitantes sem reserva prévia.
+function isFimDeSemana(dataISO: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dataISO)) return false;
+  const [ano, mes, dia] = dataISO.split("-").map(Number);
+  const diaDaSemana = new Date(Date.UTC(ano, mes - 1, dia)).getUTCDay();
+  return diaDaSemana === 0 || diaDaSemana === 6;
+}
+
 export default function ReservaForm() {
   const [form, setForm] = useState<ReservaInput>(initialState);
   const [status, setStatus] = useState<Status>("idle");
@@ -27,8 +36,19 @@ export default function ReservaForm() {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
+  const dataEhFimDeSemana = isFimDeSemana(form.dataVisita);
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (isFimDeSemana(form.dataVisita)) {
+      setStatus("error");
+      setErrorMsg(
+        "Aos sábados e domingos não é necessário reservar — é só chegar. Escolha um dia de semana para reservar."
+      );
+      return;
+    }
+
     setStatus("loading");
     setErrorMsg(null);
 
@@ -124,7 +144,7 @@ export default function ReservaForm() {
           />
         </Field>
 
-        <Field label="Data desejada" htmlFor="dataVisita">
+        <Field label="Data desejada (dia de semana)" htmlFor="dataVisita">
           <input
             id="dataVisita"
             type="date"
@@ -132,40 +152,20 @@ export default function ReservaForm() {
             value={form.dataVisita}
             onChange={(e) => update("dataVisita", e.target.value)}
             className="input"
+            aria-invalid={dataEhFimDeSemana}
           />
+          {dataEhFimDeSemana && (
+            <p className="mt-1.5 text-xs text-wood-dark/70">
+              Aos sábados e domingos não é necessário reservar — é só chegar, das 13h30 às 18h30.
+              Escolha um dia de semana para reservar.
+            </p>
+          )}
         </Field>
       </div>
 
-      <fieldset>
-        <legend className="mb-2 text-sm font-semibold text-wood-dark">Tipo de visita</legend>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {(
-            [
-              { value: "guiada", label: "Casa + moinho (visita guiada)" },
-              { value: "parque", label: "Somente entrada no parque" },
-            ] as { value: TipoVisita; label: string }[]
-          ).map((opt) => (
-            <label
-              key={opt.value}
-              className={`flex cursor-pointer items-center gap-3 rounded-xl border p-4 text-sm transition ${
-                form.tipoVisita === opt.value
-                  ? "border-wood bg-wheat-light/50"
-                  : "border-wood/15 hover:border-wood/40"
-              }`}
-            >
-              <input
-                type="radio"
-                name="tipoVisita"
-                value={opt.value}
-                checked={form.tipoVisita === opt.value}
-                onChange={() => update("tipoVisita", opt.value)}
-                className="h-4 w-4 accent-wood"
-              />
-              {opt.label}
-            </label>
-          ))}
-        </div>
-      </fieldset>
+      <p className="text-sm text-wood-dark/70">
+        A reserva é sempre entrada + visitação guiada à casa e ao moinho.
+      </p>
 
       <div className="grid gap-5 sm:grid-cols-3">
         <Field label="Adultos" htmlFor="adultos">
@@ -215,7 +215,11 @@ export default function ReservaForm() {
         <p className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{errorMsg}</p>
       )}
 
-      <button type="submit" disabled={status === "loading"} className="btn-primary w-full sm:w-auto">
+      <button
+        type="submit"
+        disabled={status === "loading" || dataEhFimDeSemana}
+        className="btn-primary w-full sm:w-auto disabled:cursor-not-allowed disabled:opacity-50"
+      >
         {status === "loading" ? "Enviando..." : "Enviar pedido de reserva"}
       </button>
     </form>

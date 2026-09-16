@@ -17,21 +17,36 @@ export default function IngressosPage() {
         <SectionHeading
           eyebrow="Planeje sua visita"
           title="Ingressos e reservas"
-          description="Reserve online e nossa equipe confirma sua visita pelo WhatsApp ou e-mail. Sem pagamento antecipado: o pagamento é feito no local."
+          description="Aos sábados e domingos é só chegar, sem reserva. As reservas pelo site são para visitas durante a semana — nossa equipe confirma pelo WhatsApp ou e-mail."
         />
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2">
           <PrecoCard
-            titulo={PARK.precos.parque.label}
-            preco={PARK.precos.parque.valor}
-            itens={[PARK.precos.parque.obs, ...PARK.precos.parque.inclui]}
-          />
-          <PrecoCard
-            titulo={PARK.precos.guiada.label}
-            preco={PARK.precos.guiada.valor}
+            titulo={PARK.precos.completo.label}
+            preco={PARK.precos.completo.valor}
             destaque
-            itens={[PARK.precos.guiada.obs, PARK.precos.guiada.obsCrianca, PARK.precos.guiada.obsBebe]}
+            itens={[
+              PARK.precos.completo.obs,
+              PARK.precos.completo.obsCrianca,
+              PARK.precos.completo.obsBebe,
+            ]}
           />
+          <div className="rounded-2xl border border-wood/15 bg-cream p-7">
+            <p className="text-sm font-semibold uppercase tracking-wide text-forest">
+              Fim de semana, sem reserva
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-wood-dark/70">
+              Aos sábados e domingos não é preciso reservar: é só chegar e pagar no local.
+            </p>
+            <ul className="mt-4 space-y-1.5 text-sm text-wood-dark/70">
+              <li>
+                {PARK.precos.parque.label}: {PARK.precos.parque.valor} ({PARK.precos.parque.obs})
+              </li>
+              <li>
+                {PARK.precos.guiada.label}: +{PARK.precos.guiada.valor} ({PARK.precos.guiada.obs.toLowerCase()})
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div className="mt-6 space-y-4 rounded-2xl border border-wood/10 bg-wheat-light/30 p-6 text-sm text-wood-dark/80">
@@ -40,7 +55,7 @@ export default function IngressosPage() {
             {PARK.horarioResumo}. {PARK.horarioObs}
           </p>
           <p>
-            <span className="font-semibold text-wood-dark">Fora do horário regular: </span>
+            <span className="font-semibold text-wood-dark">Pagamento das reservas: </span>
             {PARK.reserva.foraDoHorario}
           </p>
           <p>
@@ -62,10 +77,10 @@ export default function IngressosPage() {
 
         <div className="mt-16 grid gap-12 lg:grid-cols-[1.1fr_1fr]">
           <div className="rounded-3xl border border-wood/10 bg-cream p-6 shadow-sm sm:p-8">
-            <h3 className="text-xl font-semibold text-wood-dark">Reservar visita</h3>
+            <h3 className="text-xl font-semibold text-wood-dark">Reservar visita durante a semana</h3>
             <p className="mt-2 text-sm text-wood-dark/70">
-              Preencha os dados abaixo. Vagas limitadas nos dias de pico — reservar com
-              antecedência garante seu horário.
+              Preencha os dados abaixo com pelo menos 1 dia de antecedência. Aos sábados e
+              domingos não é necessário reservar — é só chegar.
             </p>
             <div className="mt-6">
               <ReservaForm />

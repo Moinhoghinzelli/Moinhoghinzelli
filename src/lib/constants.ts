@@ -20,7 +20,7 @@ export const PARK = {
 
   horarioResumo: "Sábados e domingos, das 13h30 às 18h30",
   horarioObs:
-    "Sem necessidade de reserva prévia. A visitação guiada à casa e ao moinho acontece de hora em hora. Fora desses dias ou horários, agende com no mínimo 1 dia de antecedência, exclusivamente pelo WhatsApp.",
+    "Sem necessidade de reserva prévia — é só chegar. A visitação guiada à casa e ao moinho acontece de hora em hora. Durante a semana, atendemos apenas com reserva antecipada: reserve pelo formulário abaixo ou pelo WhatsApp, com no mínimo 1 dia de antecedência.",
   climaObs:
     "Em caso de mau tempo, o funcionamento do parque pode ser alterado. Consulte nossas redes sociais ou o WhatsApp antes de vir.",
 
@@ -43,13 +43,20 @@ export const PARK = {
       obsBebe: "Grátis até 3 anos",
       obs: "Ingresso adicional à entrada do parque",
     },
+    completo: {
+      label: "Entrada + visitação guiada",
+      valor: "R$ 55",
+      obsCrianca: "R$ 35 de 4 a 8 anos",
+      obsBebe: "Grátis até 3 anos",
+      obs: "Valor integral cobrado nas reservas durante a semana",
+    },
   },
 
   reserva: {
     grupos:
       "Grupos acima de 15 pessoas, agências e guias de turismo, e escolas e instituições (turismo pedagógico) têm condições e valores especiais. Fale pelo WhatsApp para consultar disponibilidade.",
     foraDoHorario:
-      "Reservas durante a semana ou fora do horário regular são cobradas no valor integral (parque + visita guiada) e exigem sinal de 30% para confirmar; o restante é pago no dia da visita.",
+      "Reservas durante a semana ou fora do horário regular são cobradas no valor integral (entrada + visita guiada) e exigem sinal de 30% para confirmar; o restante é pago no dia da visita.",
   },
 
   fundacao: {
@@ -97,6 +104,7 @@ export const ATRACOES = [
     descricao:
       "Um espaço completo para locação, preparado para aniversários, casamentos, eventos corporativos, confraternizações e ocasiões especiais — unindo estrutura, natureza e o charme histórico da propriedade.",
     imagem: "/images/galpao-eventos.jpg",
+    imagemPosicao: "object-bottom",
   },
 ] as const;
 

@@ -93,7 +93,7 @@ export default function HomePage() {
                       src={atracao.imagem}
                       alt=""
                       fill
-                      className="object-cover"
+                      className={`object-cover ${"imagemPosicao" in atracao ? atracao.imagemPosicao : ""}`}
                       sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
                     />
                   </div>
@@ -159,9 +159,9 @@ export default function HomePage() {
             <p className="eyebrow text-wheat-light">Planeje sua visita</p>
             <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Ingressos e reservas</h2>
             <p className="mt-4 max-w-md text-cream/80">
-              Entrada no parque por {PARK.precos.parque.valor} ou experiência completa com
-              visita guiada à casa e ao moinho por mais {PARK.precos.guiada.valor}. Reserve
-              online e confirmamos com você por WhatsApp.
+              Aos sábados e domingos é só chegar, sem reserva. Durante a semana, reserve sua
+              visita — entrada + visita guiada por {PARK.precos.completo.valor} — online ou
+              pelo WhatsApp.
             </p>
           </div>
           <div className="flex flex-col gap-4 sm:flex-row lg:justify-end">
