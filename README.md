@@ -1,11 +1,13 @@
 # Site institucional — Moinho Ghinzelli
 
 Site institucional do Moinho Ghinzelli (Antônio Prado/RS), com páginas de história,
-atrações, contato e um formulário de **reserva de visita** (sem pagamento online — a
-confirmação é feita manualmente por WhatsApp/e-mail).
+atrações, contato e um formulário de **reserva de visita** para dias de semana. O
+formulário não grava em nenhum banco de dados — ele monta a mensagem com os dados
+preenchidos e abre o WhatsApp da equipe já com tudo pronto para enviar.
 
-Stack: **Next.js 15 (App Router) + TypeScript + Tailwind CSS + Supabase**, pronto para
-deploy na **Vercel**.
+Stack: **Next.js 15 (App Router) + TypeScript + Tailwind CSS**, pronto para deploy na
+**Vercel**. Não depende de nenhum serviço externo (banco de dados, API paga, etc.) —
+é só instalar e rodar.
 
 ## Conteúdo do site
 
@@ -75,74 +77,35 @@ briefing oficial (set/2026) — não são mais estimativas de pesquisa.
 
    Acesse http://localhost:3000
 
-## 2. Configurar o Supabase (para o formulário de reservas funcionar)
-
-O formulário de reservas grava os pedidos em uma tabela do Supabase. Sem essa
-configuração, o site funciona normalmente, mas o formulário retorna um aviso
-pedindo para reservar por WhatsApp.
-
-1. Crie uma conta e um projeto em [supabase.com](https://supabase.com) (gratuito).
-2. No painel do projeto, vá em **SQL Editor**, cole o conteúdo do arquivo
-   [`supabase/schema.sql`](./supabase/schema.sql) e clique em **Run**. Isso cria a
-   tabela `reservas` já com segurança (RLS) habilitada.
-3. Vá em **Project Settings > API** e copie:
-   - **Project URL**
-   - **service_role key** (em "Project API keys" — é uma chave secreta, nunca a
-     compartilhe nem exponha no navegador)
-4. Copie o arquivo `.env.local.example` para `.env.local`:
-
-   ```bash
-   cp .env.local.example .env.local
-   ```
-
-5. Preencha `.env.local`:
-
-   ```
-   SUPABASE_URL=https://xxxxxxxxxxxx.supabase.co
-   SUPABASE_SERVICE_ROLE_KEY=eyJ...
-   ```
-
-6. Reinicie `npm run dev`. Teste o formulário em `/ingressos` e confira se a
-   reserva aparece na tabela `reservas` (Table Editor, no painel do Supabase).
-
-### Ver e gerenciar as reservas recebidas
-
-Por enquanto, as reservas ficam visíveis apenas no **Table Editor** do Supabase
-(Supabase Dashboard > Table Editor > `reservas`). Dá para filtrar por data,
-marcar o campo `status` como `confirmada`/`cancelada`, etc. Se no futuro quiserem
-uma tela de administração dentro do próprio site, isso pode ser adicionado depois.
-
-## 3. Publicar na Vercel
+## 2. Publicar na Vercel
 
 1. Suba o código para um repositório no GitHub (crie um repositório vazio no
    GitHub e siga as instruções de `git push` que ele mostra).
 2. Acesse [vercel.com](https://vercel.com), crie uma conta e clique em
    **Add New > Project**, importando o repositório do GitHub.
-3. Em **Environment Variables**, adicione as mesmas variáveis do `.env.local`:
-   - `SUPABASE_URL`
-   - `SUPABASE_SERVICE_ROLE_KEY`
-4. Clique em **Deploy**. Em poucos minutos o site estará no ar em um endereço
-   `.vercel.app` (é possível depois configurar um domínio próprio, como
-   `moinhoghinzelli.com.br`, em **Project Settings > Domains**).
+3. Clique em **Deploy**. Em poucos minutos o site estará no ar em um endereço
+   `.vercel.app` (é possível depois configurar um domínio próprio, como já foi
+   feito com `moinhoghinzelli.com.br`, em **Project Settings > Domains**). Não
+   precisa configurar nenhuma variável de ambiente — o site não depende de nenhum
+   serviço externo.
 
 Qualquer novo `git push` para a branch principal gera automaticamente um novo
 deploy.
 
-## 4. Próximos passos sugeridos
+## 3. Próximos passos sugeridos
 
 - [ ] Publicar o vídeo institucional (`Moinho.mp4`, na pasta do Drive) em um serviço de
       hospedagem de vídeo (YouTube não listado ou Vimeo — o arquivo é grande demais
       para ficar dentro do próprio site) e embutir o player em `/sobre` ou na Home.
-- [ ] Adicionar uma seção de depoimentos com as avaliações do Google (sugestão do
-      próprio proprietário no briefing) assim que houver acesso a elas.
 - [ ] Conforme mais fotos forem chegando (a pasta do Drive tem bem mais do que foi
       usado), adicionar em `public/images/` e ligar aos itens correspondentes em
       `src/lib/constants.ts` (campo `imagem`).
-- [ ] Definir um domínio próprio e configurá-lo na Vercel.
+- [ ] Se no futuro quiserem guardar as reservas em algum lugar (não só como mensagem
+      de WhatsApp) — por exemplo para ter uma lista/planilha organizada — dá para
+      reintroduzir um banco de dados (Supabase, Google Sheets via API, etc.) mais
+      pra frente sem precisar refazer o formulário.
 - [ ] Se quiserem cobrar o ingresso online no futuro, é possível integrar um
       gateway de pagamento brasileiro (ex: Mercado Pago) na página `/ingressos`.
-- [ ] Configurar um e-mail ou notificação automática (ex: webhook do Supabase)
-      para avisar a equipe assim que uma nova reserva chegar.
 
 ## Estrutura do projeto
 
@@ -154,11 +117,10 @@ src/
     atracoes/page.tsx      # Atrações
     ingressos/page.tsx      # Preços + formulário de reserva
     contato/page.tsx        # Contato + mapa
-    api/reservas/route.ts   # Endpoint que grava a reserva no Supabase
-  components/               # Header, Footer, formulário, mapa, etc.
+    sitemap.ts               # Gera /sitemap.xml
+    robots.ts                # Gera /robots.txt
+  components/               # Header, Footer, formulário (ReservaForm), mapa, etc.
   lib/
     constants.ts             # Todas as informações do parque (editar aqui!)
-    supabase-server.ts        # Cliente Supabase (uso interno, servidor)
   types/reserva.ts            # Tipos do formulário de reserva
-supabase/schema.sql            # Script para criar a tabela de reservas
 ```

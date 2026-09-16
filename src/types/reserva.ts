@@ -5,6 +5,7 @@ export type ReservaInput = {
   telefone: string;
   email?: string;
   dataVisita: string; // formato "YYYY-MM-DD"
+  horario: string; // formato "HH:MM"
   tipoVisita: TipoVisita;
   adultos: number;
   criancas5a12: number;

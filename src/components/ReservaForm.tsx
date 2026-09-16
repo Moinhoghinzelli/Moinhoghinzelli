@@ -2,14 +2,16 @@
 
 import { useState, type FormEvent } from "react";
 import type { ReservaInput } from "@/types/reserva";
+import { PARK } from "@/lib/constants";
 
-type Status = "idle" | "loading" | "success" | "error";
+type Status = "idle" | "success" | "error";
 
 const initialState: ReservaInput = {
   nome: "",
   telefone: "",
   email: "",
   dataVisita: "",
+  horario: "",
   tipoVisita: "guiada",
   adultos: 2,
   criancas5a12: 0,
@@ -27,6 +29,33 @@ function isFimDeSemana(dataISO: string): boolean {
   return diaDaSemana === 0 || diaDaSemana === 6;
 }
 
+function formatDataBR(dataISO: string): string {
+  const [ano, mes, dia] = dataISO.split("-");
+  return `${dia}/${mes}/${ano}`;
+}
+
+// Não há backend/banco de dados: a reserva é montada como mensagem e enviada
+// direto pelo WhatsApp, que é como o Moinho de fato confirma as visitas.
+function montarMensagemWhatsapp(form: ReservaInput): string {
+  const linhas = [
+    "Olá! Gostaria de reservar uma visita ao Moinho Ghinzelli durante a semana.",
+    "",
+    `Nome: ${form.nome}`,
+    `Data desejada: ${formatDataBR(form.dataVisita)}`,
+    `Horário desejado: ${form.horario}`,
+    "Tipo de visita: Entrada + visitação guiada",
+    `Adultos: ${form.adultos}`,
+    `Crianças (4 a 8 anos): ${form.criancas5a12}`,
+    `Crianças até 3 anos: ${form.criancasAte4}`,
+    `Telefone: ${form.telefone}`,
+  ];
+
+  if (form.email) linhas.push(`E-mail: ${form.email}`);
+  if (form.observacoes) linhas.push(`Observações: ${form.observacoes}`);
+
+  return linhas.join("\n");
+}
+
 export default function ReservaForm() {
   const [form, setForm] = useState<ReservaInput>(initialState);
   const [status, setStatus] = useState<Status>("idle");
@@ -38,9 +67,36 @@ export default function ReservaForm() {
 
   const dataEhFimDeSemana = isFimDeSemana(form.dataVisita);
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setErrorMsg(null);
 
+    // honeypot - se um bot preencheu o campo escondido, finge que deu certo
+    if (form.empresa) {
+      setStatus("success");
+      return;
+    }
+
+    if (!form.nome || form.nome.trim().length < 2) {
+      setStatus("error");
+      setErrorMsg("Informe seu nome completo.");
+      return;
+    }
+    if (!form.telefone || form.telefone.trim().length < 8) {
+      setStatus("error");
+      setErrorMsg("Informe um telefone/WhatsApp válido.");
+      return;
+    }
+    if (!form.dataVisita) {
+      setStatus("error");
+      setErrorMsg("Informe uma data de visita.");
+      return;
+    }
+    if (!form.horario) {
+      setStatus("error");
+      setErrorMsg("Informe o horário desejado.");
+      return;
+    }
     if (isFimDeSemana(form.dataVisita)) {
       setStatus("error");
       setErrorMsg(
@@ -49,39 +105,23 @@ export default function ReservaForm() {
       return;
     }
 
-    setStatus("loading");
-    setErrorMsg(null);
-
-    try {
-      const res = await fetch("/api/reservas", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      const data = await res.json().catch(() => ({}));
-
-      if (!res.ok) {
-        setStatus("error");
-        setErrorMsg(data.error ?? "Não foi possível enviar sua reserva. Tente novamente.");
-        return;
-      }
-
-      setStatus("success");
-      setForm(initialState);
-    } catch {
-      setStatus("error");
-      setErrorMsg("Falha de conexão. Verifique sua internet e tente novamente.");
-    }
+    const mensagem = montarMensagemWhatsapp(form);
+    window.open(
+      `https://wa.me/${PARK.whatsappNumero}?text=${encodeURIComponent(mensagem)}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+    setStatus("success");
+    setForm(initialState);
   }
 
   if (status === "success") {
     return (
       <div className="rounded-2xl border border-forest/30 bg-forest/10 p-8 text-center">
-        <h3 className="text-xl font-semibold text-forest-dark">Reserva enviada! 🌾</h3>
+        <h3 className="text-xl font-semibold text-forest-dark">Quase lá! 🌾</h3>
         <p className="mt-2 text-sm text-wood-dark/80">
-          Recebemos seu pedido de reserva. Em breve entraremos em contato pelo WhatsApp ou
-          e-mail informado para confirmar sua visita.
+          Abrimos o WhatsApp numa nova aba com sua reserva já preenchida — é só conferir e
+          enviar a mensagem para confirmar com a nossa equipe.
         </p>
         <button
           type="button"
@@ -133,17 +173,6 @@ export default function ReservaForm() {
           />
         </Field>
 
-        <Field label="E-mail (opcional)" htmlFor="email">
-          <input
-            id="email"
-            type="email"
-            value={form.email}
-            onChange={(e) => update("email", e.target.value)}
-            className="input"
-            placeholder="voce@email.com"
-          />
-        </Field>
-
         <Field label="Data desejada (dia de semana)" htmlFor="dataVisita">
           <input
             id="dataVisita"
@@ -160,6 +189,28 @@ export default function ReservaForm() {
               Escolha um dia de semana para reservar.
             </p>
           )}
+        </Field>
+
+        <Field label="Horário desejado" htmlFor="horario">
+          <input
+            id="horario"
+            type="time"
+            required
+            value={form.horario}
+            onChange={(e) => update("horario", e.target.value)}
+            className="input"
+          />
+        </Field>
+
+        <Field label="E-mail (opcional)" htmlFor="email">
+          <input
+            id="email"
+            type="email"
+            value={form.email}
+            onChange={(e) => update("email", e.target.value)}
+            className="input"
+            placeholder="voce@email.com"
+          />
         </Field>
       </div>
 
@@ -217,10 +268,10 @@ export default function ReservaForm() {
 
       <button
         type="submit"
-        disabled={status === "loading" || dataEhFimDeSemana}
+        disabled={dataEhFimDeSemana}
         className="btn-primary w-full sm:w-auto disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {status === "loading" ? "Enviando..." : "Enviar pedido de reserva"}
+        Reservar pelo WhatsApp
       </button>
     </form>
   );

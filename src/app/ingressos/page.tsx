@@ -17,7 +17,7 @@ export default function IngressosPage() {
         <SectionHeading
           eyebrow="Planeje sua visita"
           title="Ingressos e reservas"
-          description="Aos sábados e domingos é só chegar, sem reserva. As reservas pelo site são para visitas durante a semana — nossa equipe confirma pelo WhatsApp ou e-mail."
+          description="Aos sábados e domingos é só chegar, sem reserva. As reservas durante a semana são feitas direto pelo WhatsApp — preencha o formulário abaixo e confirme com a nossa equipe."
         />
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2">
