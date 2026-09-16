@@ -1,6 +1,8 @@
 // Todas as informações "de negócio" do parque ficam centralizadas aqui.
 // Conteúdo confirmado a partir do briefing oficial preenchido pelo proprietário (set/2026).
 
+export const SITE_URL = "https://www.moinhoghinzelli.com.br";
+
 export const PARK = {
   nome: "Moinho Ghinzelli",
   cidade: "Antônio Prado",

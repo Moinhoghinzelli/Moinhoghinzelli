@@ -3,7 +3,7 @@ import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { PARK } from "@/lib/constants";
+import { GOOGLE_AVALIACOES, PARK, SITE_URL } from "@/lib/constants";
 
 const display = Playfair_Display({
   subsets: ["latin"],
@@ -18,6 +18,7 @@ const body = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: `${PARK.nome} | Turismo rural em Antônio Prado, RS`,
     template: `%s | ${PARK.nome}`,
@@ -42,6 +43,37 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: PARK.nome,
+  description:
+    "Moinho de 1894 em funcionamento, com visita guiada à casa histórica, trilhas, cascata, bodega e passeio de carreto.",
+  url: SITE_URL,
+  image: `${SITE_URL}/images/moinho-exterior.jpg`,
+  telephone: `+${PARK.whatsappNumero}`,
+  priceRange: "R$15 - R$55",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: PARK.endereco,
+    addressLocality: PARK.cidade,
+    addressRegion: PARK.estado,
+    addressCountry: "BR",
+  },
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Saturday", "Sunday"],
+    opens: "13:30",
+    closes: "18:30",
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: GOOGLE_AVALIACOES.nota,
+    reviewCount: GOOGLE_AVALIACOES.total,
+  },
+  sameAs: [PARK.instagramUrl, PARK.facebookUrl],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -50,6 +82,11 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${display.variable} ${body.variable}`}>
       <body className="flex min-h-screen flex-col bg-cream">
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
