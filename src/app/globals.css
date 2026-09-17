@@ -42,7 +42,7 @@ h4 {
   }
 
   .eyebrow {
-    @apply text-sm font-semibold uppercase tracking-[0.2em] text-forest;
+    @apply text-sm font-semibold uppercase tracking-[0.2em] text-wheat-dark;
   }
 
   .input {

@@ -32,7 +32,7 @@ export default function IngressosPage() {
             ]}
           />
           <div className="rounded-2xl border border-wood/15 bg-cream p-7">
-            <p className="text-sm font-semibold uppercase tracking-wide text-forest">
+            <p className="text-sm font-semibold uppercase tracking-wide text-wheat-dark">
               Fim de semana, sem reserva
             </p>
             <p className="mt-2 text-sm leading-relaxed text-wood-dark/70">
@@ -121,7 +121,7 @@ function PrecoCard({
         destaque ? "border-wood bg-wood text-cream" : "border-wood/15 bg-cream"
       }`}
     >
-      <p className={`text-sm font-semibold uppercase tracking-wide ${destaque ? "text-wheat-light" : "text-forest"}`}>
+      <p className={`text-sm font-semibold uppercase tracking-wide ${destaque ? "text-wheat-light" : "text-wheat-dark"}`}>
         {titulo}
       </p>
       <p className={`mt-2 text-4xl font-semibold font-display ${destaque ? "text-cream" : "text-wood-dark"}`}>

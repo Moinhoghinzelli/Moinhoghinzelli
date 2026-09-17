@@ -29,6 +29,14 @@ function isFimDeSemana(dataISO: string): boolean {
   return diaDaSemana === 0 || diaDaSemana === 6;
 }
 
+const HORARIO_MIN = "08:00";
+const HORARIO_MAX = "17:00";
+
+function isForaDoHorarioPermitido(horario: string): boolean {
+  if (!/^\d{2}:\d{2}$/.test(horario)) return false;
+  return horario < HORARIO_MIN || horario > HORARIO_MAX;
+}
+
 function formatDataBR(dataISO: string): string {
   const [ano, mes, dia] = dataISO.split("-");
   return `${dia}/${mes}/${ano}`;
@@ -66,6 +74,7 @@ export default function ReservaForm() {
   }
 
   const dataEhFimDeSemana = isFimDeSemana(form.dataVisita);
+  const horarioForaDoPermitido = isForaDoHorarioPermitido(form.horario);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -95,6 +104,11 @@ export default function ReservaForm() {
     if (!form.horario) {
       setStatus("error");
       setErrorMsg("Informe o horário desejado.");
+      return;
+    }
+    if (isForaDoHorarioPermitido(form.horario)) {
+      setStatus("error");
+      setErrorMsg(`Escolha um horário entre ${HORARIO_MIN} e ${HORARIO_MAX}.`);
       return;
     }
     if (isFimDeSemana(form.dataVisita)) {
@@ -191,15 +205,23 @@ export default function ReservaForm() {
           )}
         </Field>
 
-        <Field label="Horário desejado" htmlFor="horario">
+        <Field label="Horário desejado (08:00 às 17:00)" htmlFor="horario">
           <input
             id="horario"
             type="time"
             required
+            min={HORARIO_MIN}
+            max={HORARIO_MAX}
             value={form.horario}
             onChange={(e) => update("horario", e.target.value)}
             className="input"
+            aria-invalid={horarioForaDoPermitido}
           />
+          {horarioForaDoPermitido && (
+            <p className="mt-1.5 text-xs text-wood-dark/70">
+              Escolha um horário entre {HORARIO_MIN} e {HORARIO_MAX}.
+            </p>
+          )}
         </Field>
 
         <Field label="E-mail (opcional)" htmlFor="email">
@@ -268,7 +290,7 @@ export default function ReservaForm() {
 
       <button
         type="submit"
-        disabled={dataEhFimDeSemana}
+        disabled={dataEhFimDeSemana || horarioForaDoPermitido}
         className="btn-primary w-full sm:w-auto disabled:cursor-not-allowed disabled:opacity-50"
       >
         Reservar pelo WhatsApp

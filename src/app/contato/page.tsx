@@ -51,7 +51,7 @@ function ContactRow({
 }) {
   return (
     <div className="border-b border-wood/10 pb-4">
-      <p className="text-xs font-semibold uppercase tracking-wide text-forest">{label}</p>
+      <p className="text-xs font-semibold uppercase tracking-wide text-wheat-dark">{label}</p>
       {href ? (
         <a
           href={href}

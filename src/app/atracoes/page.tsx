@@ -34,7 +34,7 @@ export default function AtracoesPage() {
                       src={(atracao as { imagem: string }).imagem}
                       alt=""
                       fill
-                      className={`object-cover ${"imagemPosicao" in atracao ? atracao.imagemPosicao : ""}`}
+                      className={`object-contain ${"imagemPosicao" in atracao ? atracao.imagemPosicao : ""}`}
                       sizes="(min-width: 640px) 224px, 100vw"
                     />
                   </div>

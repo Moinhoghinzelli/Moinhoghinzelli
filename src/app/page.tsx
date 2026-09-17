@@ -93,7 +93,7 @@ export default function HomePage() {
                       src={atracao.imagem}
                       alt=""
                       fill
-                      className={`object-cover ${"imagemPosicao" in atracao ? atracao.imagemPosicao : ""}`}
+                      className={`object-contain ${"imagemPosicao" in atracao ? atracao.imagemPosicao : ""}`}
                       sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
                     />
                   </div>
@@ -213,7 +213,7 @@ function Stars() {
 function InfoItem({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="text-xs font-semibold uppercase tracking-wide text-forest">{label}</p>
+      <p className="text-xs font-semibold uppercase tracking-wide text-wheat-dark">{label}</p>
       <p className="mt-1 text-base font-medium text-wood-dark">{value}</p>
     </div>
   );
