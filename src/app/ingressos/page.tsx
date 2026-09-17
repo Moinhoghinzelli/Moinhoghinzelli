@@ -65,7 +65,7 @@ export default function IngressosPage() {
         </div>
 
         <div className="mt-6 rounded-2xl border border-forest/20 bg-forest/5 p-6">
-          <h3 className="text-base font-semibold text-forest-dark">Grupos, escolas e parcerias</h3>
+          <h3 className="text-base font-semibold text-wheat-dark">Grupos, escolas e parcerias</h3>
           <p className="mt-2 text-sm leading-relaxed text-wood-dark/75">{PARK.reserva.grupos}</p>
           <div className="mt-4">
             <WhatsappButton
