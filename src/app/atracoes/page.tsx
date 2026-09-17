@@ -29,12 +29,12 @@ export default function AtracoesPage() {
                 className="overflow-hidden rounded-2xl border border-wood/10 bg-wheat-light/30 sm:grid sm:grid-cols-[auto_1fr] sm:items-stretch"
               >
                 {temImagem ? (
-                  <div className="relative h-48 w-full sm:h-full sm:w-56">
+                  <div className="relative aspect-[4/5] w-full sm:aspect-auto sm:h-full sm:w-56">
                     <Image
                       src={(atracao as { imagem: string }).imagem}
                       alt=""
                       fill
-                      className={`object-contain ${"imagemPosicao" in atracao ? atracao.imagemPosicao : ""}`}
+                      className={`object-cover ${"imagemPosicao" in atracao ? atracao.imagemPosicao : ""}`}
                       sizes="(min-width: 640px) 224px, 100vw"
                     />
                   </div>

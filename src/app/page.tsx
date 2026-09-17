@@ -88,12 +88,12 @@ export default function HomePage() {
                 className="overflow-hidden rounded-2xl border border-wood/10 bg-cream shadow-sm transition hover:shadow-md"
               >
                 {"imagem" in atracao && atracao.imagem && (
-                  <div className="relative h-40 w-full">
+                  <div className="relative aspect-[4/5] w-full">
                     <Image
                       src={atracao.imagem}
                       alt=""
                       fill
-                      className={`object-contain ${"imagemPosicao" in atracao ? atracao.imagemPosicao : ""}`}
+                      className={`object-cover ${"imagemPosicao" in atracao ? atracao.imagemPosicao : ""}`}
                       sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
                     />
                   </div>
