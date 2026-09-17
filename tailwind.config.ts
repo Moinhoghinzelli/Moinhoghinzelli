@@ -8,24 +8,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Paleta em teste: azul clarinho + laranja (a mesma cor da fachada
-        // real do moinho) + verde de natureza. Os nomes dos tokens (cream,
-        // wood, wheat, forest) ficaram os mesmos por baixo do capô só pra
-        // não precisar trocar classe por classe em todo componente — troque
-        // os valores abaixo à vontade para ajustar o tom.
+        // Paleta em teste (v2): laranja como cor-base (a mesma da fachada
+        // real do moinho), com azul e verde de natureza como acento. Os
+        // nomes dos tokens (cream, wood, wheat, forest) ficaram os mesmos
+        // por baixo do capô só pra não precisar trocar classe por classe em
+        // todo componente — troque os valores abaixo à vontade.
         cream: {
-          DEFAULT: "#eef6fb",
-          dark: "#dceaf5",
+          DEFAULT: "#fdf4ec",
+          dark: "#f8e3cd",
         },
         wood: {
-          light: "#4f8fc2",
-          DEFAULT: "#2f6a93",
-          dark: "#173a52",
+          light: "#f4935a",
+          DEFAULT: "#e2661a",
+          dark: "#8a3a0d",
         },
         wheat: {
-          light: "#ffcda1",
-          DEFAULT: "#f2792b",
-          dark: "#c95a15",
+          light: "#bcdff5",
+          DEFAULT: "#3f8fc4",
+          dark: "#215e85",
         },
         forest: {
           light: "#8fc47c",
