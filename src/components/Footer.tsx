@@ -4,7 +4,7 @@ import { PARK } from "@/lib/constants";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-wood/10 bg-wood-dark text-cream">
+    <footer className="border-t border-wood/10 bg-wood text-cream">
       <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Image

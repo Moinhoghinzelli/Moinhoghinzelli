@@ -84,7 +84,7 @@ export default function AtracoesPage() {
             {PARK.horarioResumo}. {PARK.horarioObs}
           </p>
           <div className="mt-6">
-            <Link href="/ingressos" className="btn-primary bg-wheat text-wood-dark hover:bg-wheat-dark">
+            <Link href="/ingressos" className="btn-primary bg-cream text-wood hover:bg-cream-dark">
               Ver ingressos e reservar
             </Link>
           </div>

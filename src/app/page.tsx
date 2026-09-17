@@ -165,7 +165,7 @@ export default function HomePage() {
             </p>
           </div>
           <div className="flex flex-col gap-4 sm:flex-row lg:justify-end">
-            <Link href="/ingressos" className="btn-primary bg-wheat text-wood-dark hover:bg-wheat-dark">
+            <Link href="/ingressos" className="btn-primary bg-cream text-wood hover:bg-cream-dark">
               Fazer reserva
             </Link>
             <WhatsappButton className="btn-secondary border-cream text-cream hover:bg-cream hover:text-wood-dark" />
