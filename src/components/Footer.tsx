@@ -70,7 +70,7 @@ export default function Footer() {
           <p className="pt-3 sm:pt-0">
             © {new Date().getFullYear()} {PARK.nome}. Todos os direitos reservados.
           </p>
-          <kyvo-selo data-alinhar="esquerda" data-tema="claro" />
+          <kyvo-selo data-alinhar="esquerda" />
         </div>
       </div>
 
