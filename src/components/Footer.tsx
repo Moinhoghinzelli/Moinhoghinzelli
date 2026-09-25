@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import Script from "next/script";
 import { PARK } from "@/lib/constants";
 
 export default function Footer() {
@@ -64,11 +65,16 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-cream/10 py-6">
-        <p className="container-page text-xs text-cream/60">
-          © {new Date().getFullYear()} {PARK.nome}. Todos os direitos reservados.
-        </p>
+      <div className="border-t border-cream/10 py-3">
+        <div className="container-page flex flex-col items-start gap-1 text-xs text-cream/60 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+          <p className="pt-3 sm:pt-0">
+            © {new Date().getFullYear()} {PARK.nome}. Todos os direitos reservados.
+          </p>
+          <kyvo-selo data-alinhar="esquerda" data-tema="claro" />
+        </div>
       </div>
+
+      <Script src="https://kyvo.dev.br/selo.js" strategy="afterInteractive" />
     </footer>
   );
 }
