@@ -55,6 +55,18 @@ Ainda tem muita coisa boa sobrando na pasta do Drive (fotos de detalhes, do carr
 redes na Trilha do Pinheiro, do galpão à noite com evento) que não foi usada — vale dar
 uma olhada se quiserem variar mais as fotos no futuro.
 
+### Vídeo do hero
+
+`public/videos/hero-loop.mp4` é um recorte de ~9s do vídeo institucional do cliente
+(cascata, roda d'água e a farinha sendo moída), sem áudio, em loop, usado como fundo
+animado da foto principal na Home (`src/app/page.tsx`). É só a foto (`moinho-exterior.jpg`)
+por baixo do vídeo — em conexões lentas ou para quem prefere menos movimento na tela
+(`prefers-reduced-motion`), a foto aparece sozinha e o vídeo fica escondido.
+
+Para trocar o trecho usado, edite os tempos de início/fim no `ffmpeg` a partir do
+`Moinho.mp4` original (pasta do Drive) — os comandos usados estão no histórico do Git
+deste commit, procure por "hero_loop" caso precise recriá-los.
+
 Todos os textos, preços, horários e contatos vêm de **um único arquivo**, fácil de
 editar: `src/lib/constants.ts`. Os valores atuais foram confirmados pelo proprietário via
 briefing oficial (set/2026) — não são mais estimativas de pesquisa.
@@ -94,9 +106,12 @@ deploy.
 
 ## 3. Próximos passos sugeridos
 
-- [ ] Publicar o vídeo institucional (`Moinho.mp4`, na pasta do Drive) em um serviço de
-      hospedagem de vídeo (YouTube não listado ou Vimeo — o arquivo é grande demais
-      para ficar dentro do próprio site) e embutir o player em `/sobre` ou na Home.
+- [ ] O vídeo institucional completo (`Moinho.mp4`, na pasta do Drive) ainda não está
+      no site na íntegra — só um recorte de ~9s virou o loop de fundo do hero (veja
+      `public/videos/hero-loop.mp4` abaixo). Se quiserem o vídeo completo disponível
+      pra assistir (não só como fundo), o caminho é publicá-lo no YouTube (não
+      listado) ou Vimeo e embutir o player em `/sobre` — o arquivo original
+      (~250 MB) é grande demais para ficar hospedado dentro do próprio site.
 - [ ] Conforme mais fotos forem chegando (a pasta do Drive tem bem mais do que foi
       usado), adicionar em `public/images/` e ligar aos itens correspondentes em
       `src/lib/constants.ts` (campo `imagem`).

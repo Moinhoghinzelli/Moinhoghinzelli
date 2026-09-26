@@ -38,6 +38,19 @@ export default function HomePage() {
               className="h-auto w-full object-cover"
               priority
             />
+            {/* Vídeo institucional em loop por cima da foto — some para quem
+                prefere menos movimento na tela (prefers-reduced-motion). */}
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster="/images/moinho-exterior.jpg"
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+            >
+              <source src="/videos/hero-loop.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
       </section>
