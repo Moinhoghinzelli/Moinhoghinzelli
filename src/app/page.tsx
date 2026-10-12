@@ -4,32 +4,33 @@ import { ATRACOES, DEPOIMENTOS, GOOGLE_AVALIACOES, PARK } from "@/lib/constants"
 import SectionHeading from "@/components/SectionHeading";
 import WhatsappButton from "@/components/WhatsappButton";
 import MapEmbed from "@/components/MapEmbed";
+import Faixas from "@/components/Faixas";
 
 export default function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden" data-hero-secao>
         <div className="container-page grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-2">
-          <div>
-            <p className="eyebrow">Antônio Prado · RS</p>
-            <h1 className="mt-4 text-4xl font-semibold leading-tight text-wood-dark sm:text-5xl">
+          <div data-hero-texto>
+            <p className="eyebrow" data-hero>Antônio Prado · RS</p>
+            <h1 className="mt-4 text-4xl font-semibold leading-tight text-wood-dark sm:text-5xl" data-hero>
               {PARK.nome}
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-wood-dark/80">
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-wood-dark/80" data-hero>
               Um moinho de {PARK.fundacao.ano} que ainda funciona, uma casa cheia de memórias
               e trilhas até a cascata em meio ao verde. {PARK.tagline}.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Link href="/ingressos" className="btn-primary">
+            <div className="mt-8 flex flex-wrap gap-4" data-hero>
+              <Link href="/ingressos" className="btn-primary" data-magnetic>
                 Reservar visita
               </Link>
-              <Link href="/sobre" className="btn-secondary">
+              <Link href="/sobre" className="btn-secondary" data-magnetic>
                 Conhecer a história
               </Link>
             </div>
           </div>
-          <div className="relative mx-auto w-full max-w-xl overflow-hidden rounded-3xl shadow-xl">
+          <div className="relative mx-auto w-full max-w-xl overflow-hidden rounded-3xl shadow-xl" data-hero-media>
             <Image
               src="/images/moinho-exterior.jpg"
               alt="Moinho Ghinzelli visto de fora, com a cascata ao fundo"
@@ -99,13 +100,16 @@ export default function HomePage() {
               <div
                 key={atracao.titulo}
                 className="overflow-hidden rounded-2xl border border-wood/10 bg-cream shadow-sm transition hover:shadow-md"
+                data-reveal="card"
+                data-tilt
               >
                 {"imagem" in atracao && atracao.imagem && (
-                  <div className="relative aspect-[4/5] w-full">
+                  <div className="relative aspect-[4/5] w-full overflow-hidden">
                     <Image
                       src={atracao.imagem}
                       alt=""
                       fill
+                      data-parallax
                       className={`object-cover ${"imagemPosicao" in atracao ? atracao.imagemPosicao : ""}`}
                       sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
                     />
@@ -128,6 +132,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* FAIXAS */}
+      <Faixas />
+
       {/* DEPOIMENTOS */}
       <section className="section-padding bg-wheat-light/30">
         <div className="container-page">
@@ -142,6 +149,8 @@ export default function HomePage() {
               <div
                 key={depoimento.nome}
                 className="flex flex-col rounded-2xl border border-wood/10 bg-cream p-6 shadow-sm"
+                data-reveal="card"
+                data-tilt
               >
                 <Stars />
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-wood-dark/80">
@@ -178,7 +187,7 @@ export default function HomePage() {
             </p>
           </div>
           <div className="flex flex-col gap-4 sm:flex-row lg:justify-end">
-            <Link href="/ingressos" className="btn-primary bg-cream text-wood hover:bg-cream-dark">
+            <Link href="/ingressos" className="btn-primary bg-cream text-wood hover:bg-cream-dark" data-magnetic>
               Fazer reserva
             </Link>
             <WhatsappButton className="btn-secondary border-cream text-cream hover:bg-cream hover:text-wood-dark" />

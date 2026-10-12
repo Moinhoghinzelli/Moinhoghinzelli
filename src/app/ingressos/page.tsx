@@ -31,7 +31,7 @@ export default function IngressosPage() {
               PARK.precos.completo.obsBebe,
             ]}
           />
-          <div className="rounded-2xl border border-wood/15 bg-cream p-7">
+          <div className="rounded-2xl border border-wood/15 bg-cream p-7" data-reveal="card">
             <p className="text-sm font-semibold uppercase tracking-wide text-wheat-dark">
               Fim de semana, sem reserva
             </p>
@@ -49,7 +49,7 @@ export default function IngressosPage() {
           </div>
         </div>
 
-        <div className="mt-6 space-y-4 rounded-2xl border border-wood/10 bg-wheat-light/30 p-6 text-sm text-wood-dark/80">
+        <div className="mt-6 space-y-4 rounded-2xl border border-wood/10 bg-wheat-light/30 p-6 text-sm text-wood-dark/80" data-reveal="card">
           <p>
             <span className="font-semibold text-wood-dark">Horário: </span>
             {PARK.horarioResumo}. {PARK.horarioObs}
@@ -64,7 +64,7 @@ export default function IngressosPage() {
           </p>
         </div>
 
-        <div className="mt-6 rounded-2xl border border-forest/20 bg-forest/5 p-6">
+        <div className="mt-6 rounded-2xl border border-forest/20 bg-forest/5 p-6" data-reveal="card">
           <h3 className="text-base font-semibold text-wheat-dark">Grupos, escolas e parcerias</h3>
           <p className="mt-2 text-sm leading-relaxed text-wood-dark/75">{PARK.reserva.grupos}</p>
           <div className="mt-4">
@@ -76,7 +76,7 @@ export default function IngressosPage() {
         </div>
 
         <div className="mt-16 grid gap-12 lg:grid-cols-[1.1fr_1fr]">
-          <div className="rounded-3xl border border-wood/10 bg-cream p-6 shadow-sm sm:p-8">
+          <div className="rounded-3xl border border-wood/10 bg-cream p-6 shadow-sm sm:p-8" data-reveal="card">
             <h3 className="text-xl font-semibold text-wood-dark">Reservar visita durante a semana</h3>
             <p className="mt-2 text-sm text-wood-dark/70">
               Preencha os dados abaixo com pelo menos 1 dia de antecedência. Aos sábados e
@@ -87,7 +87,7 @@ export default function IngressosPage() {
             </div>
           </div>
 
-          <div className="flex flex-col justify-center gap-4 rounded-3xl bg-forest/10 p-6 sm:p-8">
+          <div className="flex flex-col justify-center gap-4 rounded-3xl bg-forest/10 p-6 sm:p-8" data-reveal="card">
             <h3 className="text-lg font-semibold text-forest-dark">Prefere combinar direto?</h3>
             <p className="text-sm text-wood-dark/75">
               Fale com a gente pelo WhatsApp para reservar grupos maiores, eventos ou tirar
@@ -117,6 +117,7 @@ function PrecoCard({
 }) {
   return (
     <div
+      data-reveal="card"
       className={`rounded-2xl border p-7 ${
         destaque ? "border-wood bg-wood text-cream" : "border-wood/15 bg-cream"
       }`}

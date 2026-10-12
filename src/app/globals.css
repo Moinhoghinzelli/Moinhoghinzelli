@@ -49,3 +49,154 @@ h4 {
     @apply w-full rounded-xl border border-wood/20 bg-white px-3.5 py-2.5 text-[0.95rem] text-wood-dark placeholder:text-wood-dark/40 focus:border-wood focus:outline-none focus:ring-2 focus:ring-wheat/50;
   }
 }
+
+/* ------------------------------------------------------------------
+   Animações (padrão Kyvo / Serra Summit): GSAP + ScrollTrigger.
+   Tudo aqui tem versão estática para quem prefere menos movimento.
+------------------------------------------------------------------- */
+
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: 70;
+  pointer-events: none;
+}
+.progress span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, theme(colors.wood.DEFAULT), theme(colors.wheat.DEFAULT));
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+header.is-scrolled {
+  background-color: rgb(253 244 236 / 0.98);
+  box-shadow: 0 8px 28px rgb(138 58 13 / 0.14);
+}
+
+/* títulos revelados palavra por palavra */
+.w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+.w__i {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* cards com inclinação 3D ao passar o mouse */
+[data-tilt] {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* faixas que correm e aceleram com a rolagem */
+.faixas {
+  position: relative;
+  overflow: hidden;
+  padding: 28px 0;
+}
+.band {
+  overflow: hidden;
+  padding: 14px 0;
+}
+.band--laranja {
+  background: theme(colors.wood.DEFAULT);
+  color: theme(colors.cream.DEFAULT);
+}
+.band--azul {
+  background: theme(colors.wheat.DEFAULT);
+  color: #fff;
+  transform: rotate(-1.4deg) scale(1.05);
+  margin-top: -6px;
+}
+.band__track {
+  display: flex;
+  width: max-content;
+  animation: band-move 34s linear infinite;
+}
+.band--azul .band__track {
+  animation-direction: reverse;
+}
+.has-gsap .band__track {
+  animation: none;
+}
+.band span {
+  font-family: var(--font-display), serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(22px, 3.6vw, 46px);
+  line-height: 1.1;
+  white-space: nowrap;
+  padding: 0 0.55em;
+}
+.band span:nth-of-type(even) {
+  opacity: 0.5;
+}
+@keyframes band-move {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* abertura (uma vez por sessão): painéis laranja e azul varrem a tela */
+.intro {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  background: theme(colors.cream.DEFAULT);
+  cursor: pointer;
+}
+html[data-intro="1"] .intro {
+  display: flex;
+}
+html[data-intro="1"],
+html[data-intro="1"] body {
+  overflow: hidden;
+}
+.intro__panel {
+  position: absolute;
+  inset: 0;
+  transform: translateY(100%);
+}
+.intro__panel--laranja {
+  background: theme(colors.wood.DEFAULT);
+}
+.intro__panel--azul {
+  background: theme(colors.wheat.DEFAULT);
+}
+.intro__stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 24px;
+}
+.intro__skip {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: theme(colors.wood.dark);
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .band__track {
+    animation: none;
+  }
+  .band--azul {
+    transform: none;
+  }
+}

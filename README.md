@@ -55,6 +55,23 @@ Ainda tem muita coisa boa sobrando na pasta do Drive (fotos de detalhes, do carr
 redes na Trilha do Pinheiro, do galpão à noite com evento) que não foi usada — vale dar
 uma olhada se quiserem variar mais as fotos no futuro.
 
+### Animações (padrão Kyvo / Serra Summit)
+
+As animações usam **GSAP + ScrollTrigger** e ficam em `src/components/`:
+
+- `Abertura.tsx` — abertura com a logo e dois painéis (laranja e azul) que varrem a tela,
+  uma vez por sessão (clique para pular).
+- `Animacoes.tsx` — todo o resto: topo da Home entrando em cascata, títulos palavra por
+  palavra, revelações ao rolar, parallax nas fotos, cards que inclinam e botões
+  magnéticos (só com mouse), barra de progresso de leitura e sombra no cabeçalho.
+- `Faixas.tsx` — duas faixas que correm e aceleram conforme a página é rolada.
+
+Para animar um elemento novo, basta colocar um atributo nele: `data-reveal` (sobe e
+aparece), `data-reveal="card"` (idem, com escala), `data-parallax` (foto dentro de um
+quadro com `overflow-hidden`), `data-tilt` (inclina no hover) ou `data-magnetic` (botão
+que atrai o cursor). Quem prefere menos movimento no sistema (`prefers-reduced-motion`)
+vê o site completo, sem nenhuma animação nem a abertura.
+
 ### Vídeo do hero
 
 `public/videos/hero-loop.mp4` é um recorte de ~9s do vídeo institucional do cliente

@@ -13,10 +13,10 @@ export default function SectionHeading({
 }: Props) {
   return (
     <div className={align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}>
-      {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+      {eyebrow && <p className="eyebrow" data-reveal>{eyebrow}</p>}
       <h2 className="mt-3 text-3xl font-semibold text-wood-dark sm:text-4xl">{title}</h2>
       {description && (
-        <p className="mt-4 text-base leading-relaxed text-wood-dark/75">{description}</p>
+        <p className="mt-4 text-base leading-relaxed text-wood-dark/75" data-reveal>{description}</p>
       )}
     </div>
   );

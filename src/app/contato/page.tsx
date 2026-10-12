@@ -34,7 +34,7 @@ export default function ContatoPage() {
           </div>
         </div>
 
-        <MapEmbed className="h-80 w-full lg:h-full" />
+        <div data-reveal="card" className="h-80 w-full lg:h-full"><MapEmbed className="h-full w-full" /></div>
       </div>
     </section>
   );
@@ -50,7 +50,7 @@ function ContactRow({
   href?: string;
 }) {
   return (
-    <div className="border-b border-wood/10 pb-4">
+    <div className="border-b border-wood/10 pb-4" data-reveal>
       <p className="text-xs font-semibold uppercase tracking-wide text-wheat-dark">{label}</p>
       {href ? (
         <a

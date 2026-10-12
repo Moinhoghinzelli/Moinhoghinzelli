@@ -27,13 +27,15 @@ export default function AtracoesPage() {
               <div
                 key={atracao.titulo}
                 className="overflow-hidden rounded-2xl border border-wood/10 bg-wheat-light/30 sm:grid sm:grid-cols-[auto_1fr] sm:items-stretch"
+                data-reveal="card"
               >
                 {temImagem ? (
-                  <div className="relative aspect-[4/5] w-full sm:aspect-auto sm:h-full sm:w-56">
+                  <div className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-auto sm:h-full sm:w-56">
                     <Image
                       src={(atracao as { imagem: string }).imagem}
                       alt=""
                       fill
+                      data-parallax
                       className={`object-cover ${"imagemPosicao" in atracao ? atracao.imagemPosicao : ""}`}
                       sizes="(min-width: 640px) 224px, 100vw"
                     />
@@ -57,7 +59,7 @@ export default function AtracoesPage() {
           })}
         </div>
 
-        <div className="mt-14 grid gap-8 rounded-3xl border border-wood/10 bg-wheat-light/30 p-8 sm:p-10 lg:grid-cols-[1fr_1.5fr] lg:items-center">
+        <div className="mt-14 grid gap-8 rounded-3xl border border-wood/10 bg-wheat-light/30 p-8 sm:p-10 lg:grid-cols-[1fr_1.5fr] lg:items-center" data-reveal="card">
           <div className="relative h-64 w-full overflow-hidden rounded-2xl lg:h-80">
             <Image
               src="/images/farinha-produto.jpg"
@@ -78,13 +80,13 @@ export default function AtracoesPage() {
           </div>
         </div>
 
-        <div className="mt-8 rounded-3xl bg-wood px-8 py-10 text-center text-cream sm:px-16">
+        <div className="mt-8 rounded-3xl bg-wood px-8 py-10 text-center text-cream sm:px-16" data-reveal="card">
           <h3 className="text-2xl font-semibold">Pronto para conhecer pessoalmente?</h3>
           <p className="mt-3 text-cream/80">
             {PARK.horarioResumo}. {PARK.horarioObs}
           </p>
           <div className="mt-6">
-            <Link href="/ingressos" className="btn-primary bg-cream text-wood hover:bg-cream-dark">
+            <Link href="/ingressos" className="btn-primary bg-cream text-wood hover:bg-cream-dark" data-magnetic>
               Ver ingressos e reservar
             </Link>
           </div>

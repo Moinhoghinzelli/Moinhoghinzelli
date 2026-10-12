@@ -33,13 +33,13 @@ export default function SobrePage() {
                 />
               </div>
               {HISTORIA_TEXTO.map((paragrafo, i) => (
-                <p key={i} className="text-base leading-relaxed text-wood-dark/80">
+                <p key={i} className="text-base leading-relaxed text-wood-dark/80" data-reveal>
                   {paragrafo}
                 </p>
               ))}
             </div>
 
-            <aside className="h-fit rounded-2xl border border-wood/10 bg-wheat-light/40 p-6">
+            <aside className="h-fit rounded-2xl border border-wood/10 bg-wheat-light/40 p-6" data-reveal="card">
               <p className="eyebrow">Linha do tempo</p>
               <ul className="mt-4 space-y-4 text-sm text-wood-dark/80">
                 <li>
@@ -74,11 +74,12 @@ export default function SobrePage() {
               alt="Vista aérea do Moinho Ghinzelli: cascata, riacho, ponte e os espaços da propriedade em meio à natureza"
               width={1290}
               height={715}
+              data-parallax
               className="h-auto w-full object-cover"
             />
           </div>
 
-          <blockquote className="mt-8 rounded-3xl bg-forest px-8 py-10 text-center text-cream sm:px-16">
+          <blockquote className="mt-8 rounded-3xl bg-forest px-8 py-10 text-center text-cream sm:px-16" data-reveal="card">
             <p className="font-display text-2xl italic sm:text-3xl">
               “{PARK.fundacao.fraseDestaque}”
             </p>
@@ -88,7 +89,7 @@ export default function SobrePage() {
           </blockquote>
 
           <div className="mt-12 text-center">
-            <Link href="/ingressos" className="btn-primary">
+            <Link href="/ingressos" className="btn-primary" data-magnetic>
               Quero conhecer de perto
             </Link>
           </div>

@@ -3,6 +3,8 @@ import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Abertura from "@/components/Abertura";
+import Animacoes from "@/components/Animacoes";
 import { GOOGLE_AVALIACOES, PARK, SITE_URL } from "@/lib/constants";
 
 const display = Playfair_Display({
@@ -80,13 +82,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${display.variable} ${body.variable}`}>
+    <html lang="pt-BR" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col bg-cream">
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <script
+          // marca cedo (antes de pintar) se a abertura deve rodar: 1x por sessão e sem "menos movimento"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(!sessionStorage.getItem('moinho-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.dataset.intro='1'}}catch(e){}",
+          }}
+        />
+        <Abertura />
+        <Animacoes />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
